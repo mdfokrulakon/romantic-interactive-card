@@ -1,6 +1,6 @@
-# For You
+# Romantic Interactive Card
 
-A small, romantic interactive card built with HTML, CSS, and JavaScript—featuring gentle floating hearts, cute bear reactions, cycling prompts, a playful dodging **NO** button, optional soft chime audio, and a heart burst when **YES** is clicked.
+A romantic interactive web card built with HTML, CSS, and JavaScript—featuring floating hearts, cute bear reactions, cycling prompts, a playful dodging **NO** button, optional soft chime audio, and a heart burst when **YES** is clicked.
 
 ## Files Included
 
@@ -19,7 +19,7 @@ Open `script.js` and edit the `CONFIG` object at the top to change:
 
 ## Hosting on GitHub Pages
 
-1. Create a **Public** repository named `for-you` on GitHub.
+1. Keep the repository **Public** so GitHub Pages can publish it on the free tier.
 2. Upload `index.html`, `styles.css`, `script.js`, and `README.md` to the root of the `main` branch.
-3. Open **Settings → Pages**, choose **Deploy from a branch**, select `main` and `/ (root)`, and save.
-4. Once published, share `https://<your-username>.github.io/for-you/`.
+3. Go to **Settings → Pages**, select **Deploy from a branch**, choose `main` and `/ (root)`, and save.
+4. Once published, open `https://<your-username>.github.io/romantic-interactive-card/`.
