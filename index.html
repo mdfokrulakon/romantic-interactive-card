@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>A Quiet Note For You</title>
+
+  <!-- Open Graph tags for WhatsApp & social link previews (update after deploying) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="I wrote something quiet just for you">
+  <meta property="og:description" content="Tap to open a little letter I made for you.">
+  <meta property="og:url" content="https://your-live-site-link.example/">
+  <meta property="og:image" content="https://your-live-site-link.example/preview.jpg">
+
+  <!-- Romantic Editorial Typography: Cormorant Garamond + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="starlight-canvas" aria-hidden="true"></canvas>
+
+  <noscript>
+    <div class="noscript-banner">
+      Please open this link in Safari or Chrome so the interactive letter can unfold properly.
+    </div>
+  </noscript>
+
+  <main class="stage">
+    <button
+      id="sound-toggle"
+      class="sound-toggle"
+      type="button"
+      aria-label="Toggle romantic music"
+      aria-pressed="false"
+      hidden
+    >
+      <span id="sound-icon" aria-hidden="true">♪</span>
+      <span id="sound-label">Sound On</span>
+    </button>
+
+    <!-- Step 1: Sealed Envelope View -->
+    <section id="envelope-view" class="envelope-view">
+      <div class="envelope-card glass-panel">
+        <p class="eyebrow" id="envelope-eyebrow">A private note</p>
+        <h1 class="hero-title" id="envelope-title">For Someone Special</h1>
+        <p class="envelope-subtitle" id="envelope-subtitle">
+          Made carefully, just for your screen.
+        </p>
+
+        <button
+          id="open-seal-btn"
+          class="wax-seal"
+          type="button"
+          aria-label="Tap wax seal to open the letter"
+        >
+          <span class="seal-heart" aria-hidden="true">♥</span>
+          <span class="seal-text">Open</span>
+        </button>
+
+        <p class="envelope-hint">Tap the seal to unfold</p>
+      </div>
+    </section>
+
+    <!-- Step 2: Unfolded Letter & Date Question -->
+    <section id="letter-view" class="letter-view glass-panel" hidden aria-live="polite">
+      <header class="letter-header">
+        <span class="date-stamp" id="date-stamp"></span>
+        <h2 class="letter-heading" id="letter-heading"></h2>
+      </header>
+
+      <article class="letter-body">
+        <p id="letter-text" class="letter-text"></p>
+        <p id="letter-signature" class="letter-signature"></p>
+      </article>
+
+      <div id="question-box" class="question-box" hidden>
+        <p id="question-prompt" class="question-prompt"></p>
+        <div id="button-arena" class="button-arena">
+          <button id="yes-btn" class="btn btn-yes" type="button">Yes, I'd love to</button>
+          <button id="no-btn" class="btn btn-no" type="button">Let me think...</button>
+        </div>
+        <p id="dodge-whisper" class="dodge-whisper" aria-live="polite"></p>
+      </div>
+
+      <div id="celebration-box" class="celebration-box" hidden>
+        <h3 id="celebration-title" class="celebration-title"></h3>
+        <p id="celebration-message" class="celebration-message"></p>
+        <div id="date-plan-card" class="date-plan-card"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

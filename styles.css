@@ -1,0 +1,432 @@
+:root {
+  --bg-night: #0d0812;
+  --bg-wine: #241023;
+  --bg-rosewood: #3d162c;
+  --text-ivory: #fbf4ef;
+  --text-blush: #e8cdd5;
+  --text-muted: #c4a7b2;
+  --accent-rose: #e57a95;
+  --accent-gold: #e7c28d;
+  --surface-glass: rgba(27, 13, 27, 0.72);
+  --border-glass: rgba(255, 224, 232, 0.18);
+  --shadow-glow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(229, 122, 149, 0.14);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background: radial-gradient(circle at 20% 20%, var(--bg-rosewood) 0%, var(--bg-wine) 42%, var(--bg-night) 100%);
+  color: var(--text-ivory);
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#starlight-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.noscript-banner {
+  position: relative;
+  z-index: 10;
+  margin: 1rem auto;
+  max-width: 32rem;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  background: rgba(229, 122, 149, 0.2);
+  border: 1px solid rgba(229, 122, 149, 0.45);
+  color: var(--text-ivory);
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: max(1.5rem, env(safe-area-inset-top));
+  padding-right: max(1.25rem, env(safe-area-inset-right));
+  padding-bottom: max(2rem, env(safe-area-inset-bottom));
+  padding-left: max(1.25rem, env(safe-area-inset-left));
+}
+
+.sound-toggle {
+  position: fixed;
+  top: max(1rem, env(safe-area-inset-top));
+  right: max(1rem, env(safe-area-inset-right));
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-glass);
+  background-color: rgba(27, 13, 27, 0.78);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: var(--text-blush);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.sound-toggle[hidden] {
+  display: none;
+}
+
+.sound-toggle:hover {
+  border-color: rgba(231, 194, 141, 0.5);
+  color: var(--text-ivory);
+}
+
+.glass-panel {
+  width: 100%;
+  max-width: 34rem;
+  border-radius: 26px;
+  background-color: var(--surface-glass);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-glow);
+}
+
+@supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  .glass-panel,
+  .sound-toggle {
+    background-color: rgba(24, 11, 24, 0.94);
+  }
+}
+
+/* Sealed Envelope Card */
+.envelope-view {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.envelope-view[hidden] {
+  display: none;
+}
+
+.envelope-card {
+  padding: 3rem 2rem 2.5rem;
+  text-align: center;
+  animation: gentleFadeUp 0.8s ease both;
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+}
+
+.hero-title {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.3rem, 7vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: 0.02em;
+  color: var(--text-ivory);
+}
+
+.envelope-subtitle {
+  margin: 0.9rem auto 2.25rem;
+  max-width: 24rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-blush);
+}
+
+.wax-seal {
+  width: 6.4rem;
+  height: 6.4rem;
+  border-radius: 50%;
+  border: 2px solid rgba(231, 194, 141, 0.45);
+  background: radial-gradient(circle at 32% 30%, #f095ac 0%, #c64b6c 55%, #8a2644 100%);
+  color: var(--text-ivory);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(198, 75, 108, 0.48), inset 0 2px 6px rgba(255, 255, 255, 0.28);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: sealPulse 2.6s ease-in-out infinite;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.wax-seal:hover {
+  transform: scale(1.06);
+  box-shadow: 0 16px 38px rgba(229, 122, 149, 0.58), inset 0 2px 8px rgba(255, 255, 255, 0.35);
+}
+
+.wax-seal:active {
+  transform: scale(0.96);
+}
+
+.seal-heart {
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+.seal-text {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.envelope-hint {
+  margin: 1.4rem 0 0;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+/* Unfolded Love Letter */
+.letter-view {
+  padding: 2.35rem 1.85rem 2.25rem;
+  animation: gentleFadeUp 0.7s ease both;
+}
+
+.letter-view[hidden] {
+  display: none;
+}
+
+.letter-header {
+  border-bottom: 1px solid rgba(255, 224, 232, 0.12);
+  padding-bottom: 1.1rem;
+  margin-bottom: 1.45rem;
+}
+
+.date-stamp {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+}
+
+.letter-heading {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.9rem, 5.5vw, 2.5rem);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  color: var(--text-ivory);
+}
+
+.letter-body {
+  margin-bottom: 1.75rem;
+}
+
+.letter-text {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.78;
+  color: var(--text-blush);
+  white-space: pre-line;
+}
+
+.letter-signature {
+  margin: 1.45rem 0 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.45rem;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent-gold);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.letter-signature.is-visible {
+  opacity: 1;
+}
+
+/* Playful Date Question */
+.question-box {
+  border-top: 1px solid rgba(255, 224, 232, 0.12);
+  padding-top: 1.5rem;
+  text-align: center;
+  animation: gentleFadeUp 0.6s ease both;
+}
+
+.question-box[hidden] {
+  display: none;
+}
+
+.question-prompt {
+  margin: 0 0 1.25rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.45rem, 4.5vw, 1.85rem);
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  color: var(--text-ivory);
+}
+
+.button-arena {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  min-height: 3.25rem;
+}
+
+.btn {
+  padding: 0.85rem 1.55rem;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.96rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn[hidden] {
+  display: none;
+}
+
+.btn-yes {
+  background: linear-gradient(135deg, #ef86a0 0%, #c84b6e 100%);
+  color: #fff9fb;
+  box-shadow: 0 10px 26px rgba(200, 75, 110, 0.42);
+}
+
+.btn-yes:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 14px 32px rgba(229, 122, 149, 0.52);
+}
+
+.btn-no {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 224, 232, 0.24);
+  color: var(--text-blush);
+  touch-action: none;
+}
+
+.btn-no.is-dodging {
+  position: fixed;
+  z-index: 50;
+  transition: left 0.22s cubic-bezier(0.22, 1, 0.36, 1), top 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dodge-whisper {
+  margin: 0.95rem 0 0;
+  min-height: 1.3em;
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--accent-gold);
+}
+
+/* Celebration View */
+.celebration-box {
+  border-top: 1px solid rgba(255, 224, 232, 0.14);
+  padding-top: 1.5rem;
+  text-align: center;
+  animation: gentleFadeUp 0.65s ease both;
+}
+
+.celebration-box[hidden] {
+  display: none;
+}
+
+.celebration-title {
+  margin: 0 0 0.65rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.75rem, 5vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent-gold);
+}
+
+.celebration-message {
+  margin: 0 auto 1.25rem;
+  max-width: 26rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-ivory);
+}
+
+.date-plan-card {
+  padding: 1rem 1.2rem;
+  border-radius: 16px;
+  background: rgba(231, 194, 141, 0.1);
+  border: 1px solid rgba(231, 194, 141, 0.28);
+  color: var(--text-blush);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+@keyframes sealPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes gentleFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 600px) {
+  .envelope-card {
+    padding: 3.5rem 3rem 3rem;
+  }
+
+  .letter-view {
+    padding: 2.75rem 2.65rem 2.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
